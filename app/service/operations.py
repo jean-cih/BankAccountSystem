@@ -1,44 +1,44 @@
 from fastapi import HTTPException
 from app.schemas import OperationRequest
-from app.repository.wallets import BALANCE
+from app.repository import wallets as wallets_repository
 
 
 def add_income(operation: OperationRequest):
 
-    if operation.wallet_name not in BALANCE:
+    if wallets_repository.is_wallet_exist(operation.wallet_name):
         return HTTPException(
             status_code=404, detail=f"Wallet '{operation.wallet_name}' not found"
         )
 
-    BALANCE[operation.wallet_name] += operation.amount
+    new_balance = wallets_repository.add_income(operation.wallet_name, operation.amount)
 
     return {
         "message": "Income is toped up",
         "wallet": operation.wallet_name,
         "amount": operation.amount,
         "description": operation.description,
-        "new_balance": BALANCE[operation.wallet_name],
+        "new_balance": new_balance,
     }
 
 
 def add_expense(operation: OperationRequest):
-    if operation.wallet_name not in BALANCE:
+    if wallets_repository.is_wallet_exist(operation.wallet_name):
         return HTTPException(
             status_code=404, detail=f"Wallet '{operation.wallet_name}' not found"
         )
 
-    if BALANCE[operation.wallet_name] < operation.amount:
+    if wallets_repository.get_balance_by_name(operation.wallet_name) < operation.amount:
         return HTTPException(
             status_code=404,
             detail=f"On wallet '{operation.wallet_name}' is not money enough",
         )
 
-    BALANCE[operation.wallet_name] -= operation.amount
+    new_balance = wallets_repository.add_expense(operation.wallet_name, operation.amount)
 
     return {
         "message": "Expense is subtracted",
         "wallet": operation.wallet_name,
         "amount": operation.amount,
         "description": operation.description,
-        "new_balance": BALANCE[operation.wallet_name],
+        "new_balance": new_balance,
     }
