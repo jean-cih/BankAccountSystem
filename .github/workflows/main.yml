@@ -1,0 +1,29 @@
+name: Check code by Black
+
+on:
+  push: 
+    branches: [develop]
+  pull_request: 
+    branches: [main]
+
+
+jobs:
+  style_code:
+    runs-on: ubuntu_latest
+    steps:
+      - name: Clonning Dir
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Black
+        run: pip install black
+
+      - name: Check format by Black
+        run: black --check main.py app/
+
+
+
