@@ -9,7 +9,7 @@ on:
 
 jobs:
   style_code:
-    runs-on: ubuntu_latest
+    runs-on: ubuntu-latest
     steps:
       - name: Clonning Dir
         uses: actions/checkout@v4
