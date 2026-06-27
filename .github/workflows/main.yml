@@ -1,8 +1,10 @@
 name: Check code by Black
 
 on:
-  push: develop
-  pull_request: main
+  push: 
+    branches: [develop]
+  pull_request: 
+    branches: [main]
 
 
 jobs:
