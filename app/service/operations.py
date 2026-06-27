@@ -33,7 +33,9 @@ def add_expense(operation: OperationRequest):
             detail=f"On wallet '{operation.wallet_name}' is not money enough",
         )
 
-    new_balance = wallets_repository.add_expense(operation.wallet_name, operation.amount)
+    new_balance = wallets_repository.add_expense(
+        operation.wallet_name, operation.amount
+    )
 
     return {
         "message": "Expense is subtracted",
