@@ -10,14 +10,14 @@ def add_income(operation: OperationRequest):
             status_code=404, detail=f"Wallet '{operation.wallet_name}' not found"
         )
 
-    new_balance = wallets_repository.add_income(operation.wallet_name, operation.amount)
+    wallet = wallets_repository.add_income(operation.wallet_name, operation.amount)
 
     return {
         "message": "Income is toped up",
         "wallet": operation.wallet_name,
         "amount": operation.amount,
         "description": operation.description,
-        "new_balance": new_balance,
+        "new_balance": wallet.balance,
     }
 
 
@@ -27,13 +27,15 @@ def add_expense(operation: OperationRequest):
             status_code=404, detail=f"Wallet '{operation.wallet_name}' not found"
         )
 
-    if wallets_repository.get_balance_by_name(operation.wallet_name) < operation.amount:
+    wallet = wallets_repository.get_balance_by_name(operation.wallet_name)
+
+    if wallet.balance < operation.amount:
         return HTTPException(
             status_code=404,
             detail=f"On wallet '{operation.wallet_name}' is not money enough",
         )
 
-    new_balance = wallets_repository.add_expense(
+    wallet = wallets_repository.add_expense(
         operation.wallet_name, operation.amount
     )
 
@@ -42,5 +44,5 @@ def add_expense(operation: OperationRequest):
         "wallet": operation.wallet_name,
         "amount": operation.amount,
         "description": operation.description,
-        "new_balance": new_balance,
+        "new_balance": wallet.balance,
     }
