@@ -26,22 +26,22 @@ jobs:
         run: black --check main.py app/
 
   jumpstart_app:
-      runs-on: ubuntu-latest
-      needs: style_code
-      steps:
-        - name: Clonning Dir
-        - uses: actions/checkout@v4
+    runs-on: ubuntu-latest
+    needs: style_code
+    steps:
+      - name: Clonning Dir
+      - uses: actions/checkout@v4
 
-        - name: Install Python
-          uses: actions/setup-python@v5
-          with:
-            python-version: '3.12'
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-        - name: Install Requirements
-          run: pip install -r requirements.txt
+      - name: Install Requirements
+        run: pip install -r requirements.txt
 
-        - name: Jumpstart App
-          run: python3 main.py
+      - name: Jumpstart App
+        run: python3 main.py
 
 
 
