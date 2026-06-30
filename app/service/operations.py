@@ -11,9 +11,7 @@ def add_income(db: Session, operation: OperationRequest):
             status_code=404, detail=f"Wallet '{operation.wallet_name}' not found"
         )
 
-    wallet = wallets_repository.add_income(
-        db, operation.wallet_name, operation.amount
-    )
+    wallet = wallets_repository.add_income(db, operation.wallet_name, operation.amount)
     db.commit()
 
     return {
@@ -40,9 +38,7 @@ def add_expense(db: Session, operation: OperationRequest):
             detail=f"On wallet '{operation.wallet_name}' is not money enough",
         )
 
-    wallet = wallets_repository.add_expense(
-        db, operation.wallet_name, operation.amount
-    )
+    wallet = wallets_repository.add_expense(db, operation.wallet_name, operation.amount)
 
     return {
         "message": "Expense is subtracted",

@@ -11,9 +11,7 @@ def get_wallet(db: Session, wallet_name: str | None = None):
         return {"total_balance": sum([wallet.balance for wallet in wallets])}
 
     if not wallets_repository.is_wallet_exist(db, wallet_name):
-        raise HTTPException(
-            status_code=404, detail=f"Wallet '{wallet_name}' not found"
-        )
+        raise HTTPException(status_code=404, detail=f"Wallet '{wallet_name}' not found")
 
     wallet = wallets_repository.get_balance_by_name(db, wallet_name)
     return {"wallet": wallet.name, "balance": wallet.balance}
@@ -25,9 +23,7 @@ def create_wallet(db: Session, wallet: CreateWalletRequest):
             status_code=400, detail=f"Wallet '{wallet.name}' already exists"
         )
 
-    wallet = wallets_repository.create_wallet(
-        db, wallet.name, wallet.initial_balance
-    )
+    wallet = wallets_repository.create_wallet(db, wallet.name, wallet.initial_balance)
     db.commit()
 
     return {
