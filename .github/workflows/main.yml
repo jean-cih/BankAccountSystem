@@ -44,9 +44,14 @@ jobs:
         run: |
           timeout 30 python3 main.py &
           sleep 5
-          curl -f http://127.0.0.1:8000/ || exit 1
-          echo "App is running successfully"
-          pkill -f "python3 main.py"
+          if curl -f -s http://127.0.0.1:8000/docs > /dev/null; 
+          then
+            echo "✅ Server is running"
+          else
+            echo "❌ Server failed to start"
+            kill $APP_PID 2>/dev/null || true
+            exit 1
+          fi
         shell: bash
 
 
