@@ -3,7 +3,7 @@ from app.models import User
 
 
 def get_user(db: Session, login: str) -> User | None:
-    return db.query(User).filder(User.login == login).scalar()
+    return db.query(User).filter(User.login == login).scalar()
 
 
 def create_user(db: Session, login: str) -> User:

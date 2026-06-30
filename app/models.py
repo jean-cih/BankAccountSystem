@@ -21,4 +21,4 @@ class Wallet(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
     balance: Mapped[Decimal]
-    # user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
