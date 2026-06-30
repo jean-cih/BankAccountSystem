@@ -30,7 +30,7 @@ jobs:
     needs: style_code
     steps:
       - name: Clonning Dir
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
 
       - name: Install Python
         uses: actions/setup-python@v5
